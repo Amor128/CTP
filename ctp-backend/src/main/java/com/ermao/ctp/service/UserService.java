@@ -1,7 +1,7 @@
 package com.ermao.ctp.service;
 
 
-import com.ermao.ctp.pojo.DO.UserDO;
+import com.ermao.ctp.pojo.DTO.UserDTO;
 
 /**
  * @author Ermao
@@ -10,5 +10,9 @@ import com.ermao.ctp.pojo.DO.UserDO;
 public interface UserService {
     Boolean userRegister(String phone, String password);
 
-    Boolean userLogin(String phone, String password);
+    UserDTO getUser(String phone, String password);
+
+    UserDTO getUser(Long userID);
+
+    Boolean updateUser(UserDTO userDTO);
 }

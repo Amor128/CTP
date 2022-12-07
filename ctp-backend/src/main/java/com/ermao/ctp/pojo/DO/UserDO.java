@@ -1,6 +1,7 @@
 package com.ermao.ctp.pojo.DO;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
  * Date: 2022/12/7 11:23
  */
 @TableName("user")
+@Data
 public class UserDO {
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -25,7 +27,10 @@ public class UserDO {
 
     private String phone;
 
-    private String head_pic;
+    @TableField("head_pic")
+    private String headPic;
+
+    private String qq;
 
     private Integer status;
 
@@ -37,12 +42,10 @@ public class UserDO {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    public UserDO() {
-    }
+    public UserDO() {}
 
     public UserDO(String phone, String password) {
         this.phone = phone;
         this.password = password;
     }
-
 }

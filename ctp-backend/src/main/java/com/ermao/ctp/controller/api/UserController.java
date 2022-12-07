@@ -1,13 +1,11 @@
 package com.ermao.ctp.controller.api;
 
+import com.ermao.ctp.pojo.DTO.UserDTO;
 import com.ermao.ctp.service.UserService;
 import com.ermao.ctp.utils.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -24,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public Response<Object> register(@RequestBody Map<String, String> map) {
+    public Response register(@RequestBody Map<String, String> map) {
         if (map != null) {
             if (log.isDebugEnabled()) {
                 log.debug("get user register info: {}", map);
@@ -38,7 +36,6 @@ public class UserController {
             if (!password.equals(confirmPassword)) {
                 return Response.fail();
             }
-
             Boolean registerResult = userService.userRegister(phone, password);
             if (registerResult) {
                 return Response.ok();
@@ -48,7 +45,7 @@ public class UserController {
     }
 
     @PostMapping("/sessions")
-    public Response<Object> login(@RequestBody Map<String, String> map) {
+    public Response login(@RequestBody Map<String, String> map) {
         if (map != null) {
             if (log.isDebugEnabled()) {
                 log.debug("get user register info: {}", map);
@@ -58,12 +55,40 @@ public class UserController {
             if (phone == null || password == null) {
                 return Response.fail();
             }
-
-            Boolean loginResult = userService.userLogin(phone, password);
-            if (loginResult) {
+            UserDTO userDTO = userService.getUser(phone, password);
+            if (userDTO != null) {
                 return Response.ok();
             }
         }
         return Response.fail();
+    }
+
+    @GetMapping("/{userID}")
+    public Response getUser(@PathVariable("userID") Long userID) {
+        if (log.isDebugEnabled()) {
+            log.debug("UserController.getUser params, userID: {}", userID);
+        }
+        if (userID != null) {
+            UserDTO userDTO = userService.getUser(userID);
+            if (log.isDebugEnabled()) {
+                log.debug("UserController.getUser return, userDTO: {}", userDTO);
+            }
+            return Response.ok(userDTO);
+        }
+        return Response.fail();
+    }
+
+    @PutMapping("/{userID}")
+    public Response updateUser(@PathVariable Long userID, @RequestBody UserDTO userDTO) {
+        if (log.isDebugEnabled()) {
+            log.debug("UserController.updateUser params, userDTO: {}", userDTO);
+        }
+        userDTO.setId(userID);
+        return userService.updateUser(userDTO) ? Response.ok() : Response.fail();
+    }
+
+    @GetMapping("/test")
+    public Response getUser() {
+        return Response.ok();
     }
 }

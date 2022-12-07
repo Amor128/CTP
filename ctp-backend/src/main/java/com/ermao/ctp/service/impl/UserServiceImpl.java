@@ -3,8 +3,10 @@ package com.ermao.ctp.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ermao.ctp.mapper.UserMapper;
 import com.ermao.ctp.pojo.DO.UserDO;
+import com.ermao.ctp.pojo.DTO.UserDTO;
 import com.ermao.ctp.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,14 +35,52 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean userLogin(String phone, String password) {
+    public UserDTO getUser(String phone, String password) {
         if (log.isDebugEnabled()) {
             log.debug("UserServiceImpl.userLogin get phone: {}, password: {}", phone, password);
         }
+
+        UserDO userDO;
+        UserDTO userDTO = new UserDTO();
         QueryWrapper<UserDO> userDOQueryWrapper = new QueryWrapper<>();
         userDOQueryWrapper.eq("phone", phone).eq("password", password);
-        UserDO userDO = userMapper.selectOne(userDOQueryWrapper);
-        log.debug("UserServiceImpl.userRegister return userDO: {}", userDO);
-        return userDO != null;
+        userDO = userMapper.selectOne(userDOQueryWrapper);
+        BeanUtils.copyProperties(userDO, userDTO);
+
+        if (log.isDebugEnabled()) {
+            log.debug("UserServiceImpl.getUser return userDO: {}", userDO);
+            log.debug("UserServiceImpl.getUser return userDTO: {}", userDTO);
+        }
+        return userDTO;
+    }
+
+    @Override
+    public UserDTO getUser(Long userID) {
+        if (log.isDebugEnabled()) {
+            log.debug("UserServiceImpl.getUser get userID: {}", userID);
+        }
+
+        UserDO userDO = userMapper.selectById(userID);
+        UserDTO userDTO = new UserDTO();
+        BeanUtils.copyProperties(userDO, userDTO);
+
+        if (log.isDebugEnabled()) {
+            log.debug("UserServiceImpl.getUser return userDO: {}", userDO);
+            log.debug("UserServiceImpl.getUser return userDTO: {}", userDTO);
+        }
+        return userDTO;
+    }
+
+    @Override
+    public Boolean updateUser(UserDTO userDTO) {
+        if (log.isDebugEnabled()) {
+            log.debug("UserServiceImpl.updateUser params userDTO: {}", userDTO);
+        }
+        UserDO userDO = new UserDO();
+        BeanUtils.copyProperties(userDTO, userDO);
+        if (log.isDebugEnabled()) {
+            log.debug("UserServiceImpl.updateUser return userDO: {}", userDO);
+        }
+        return userMapper.updateById(userDO) > 0;
     }
 }
