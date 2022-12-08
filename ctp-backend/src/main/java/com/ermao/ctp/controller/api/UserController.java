@@ -1,12 +1,15 @@
 package com.ermao.ctp.controller.api;
 
+import com.ermao.ctp.pojo.DO.UserDO;
 import com.ermao.ctp.pojo.DTO.UserDTO;
 import com.ermao.ctp.service.UserService;
 import com.ermao.ctp.utils.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -36,6 +39,9 @@ public class UserController {
             if (!password.equals(confirmPassword)) {
                 return Response.fail();
             }
+            if (userService.getUser(phone) != null) {
+                return Response.fail();
+            }
             Boolean registerResult = userService.userRegister(phone, password);
             if (registerResult) {
                 return Response.ok();
@@ -57,7 +63,9 @@ public class UserController {
             }
             UserDTO userDTO = userService.getUser(phone, password);
             if (userDTO != null) {
-                return Response.ok();
+                HashMap<String, Long> resultMap = new HashMap<>();
+                resultMap.put("id", userDTO.getId());
+                return Response.ok(resultMap);
             }
         }
         return Response.fail();
@@ -83,6 +91,7 @@ public class UserController {
         if (log.isDebugEnabled()) {
             log.debug("UserController.updateUser params, userDTO: {}", userDTO);
         }
+
         userDTO.setId(userID);
         return userService.updateUser(userDTO) ? Response.ok() : Response.fail();
     }

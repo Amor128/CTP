@@ -35,6 +35,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO getUser(String phone) {
+        UserDO userDO;
+        UserDTO userDTO = new UserDTO();
+        QueryWrapper<UserDO> userDOQueryWrapper = new QueryWrapper<>();
+        userDOQueryWrapper.eq("phone", phone);
+        userDO = userMapper.selectOne(userDOQueryWrapper);
+        if (userDO == null) {
+            return null;
+        }
+        BeanUtils.copyProperties(userDO, userDTO);
+        return userDTO;
+    }
+
+    @Override
     public UserDTO getUser(String phone, String password) {
         if (log.isDebugEnabled()) {
             log.debug("UserServiceImpl.userLogin get phone: {}, password: {}", phone, password);
@@ -45,8 +59,10 @@ public class UserServiceImpl implements UserService {
         QueryWrapper<UserDO> userDOQueryWrapper = new QueryWrapper<>();
         userDOQueryWrapper.eq("phone", phone).eq("password", password);
         userDO = userMapper.selectOne(userDOQueryWrapper);
+        if (userDO == null) {
+            return null;
+        }
         BeanUtils.copyProperties(userDO, userDTO);
-
         if (log.isDebugEnabled()) {
             log.debug("UserServiceImpl.getUser return userDO: {}", userDO);
             log.debug("UserServiceImpl.getUser return userDTO: {}", userDTO);

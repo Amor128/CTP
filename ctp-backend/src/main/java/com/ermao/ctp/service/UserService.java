@@ -14,5 +14,7 @@ public interface UserService {
 
     UserDTO getUser(Long userID);
 
+    UserDTO getUser(String phone);
+
     Boolean updateUser(UserDTO userDTO);
 }
