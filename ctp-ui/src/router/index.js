@@ -13,14 +13,34 @@ export const constantRoutes = [
         path: '/register',
         component: () => import('@/views/user/register')
     },
+    
     {
         path: '/user',
         component: () => import('@/views/user/userLayout'),
         children: [
             {
+                path:'',
+                component: () => import('@/views/user/home')
+            },
+            {
                 path: 'info',
                 component: () => import('@/views/user/userInfo')
-            }
+            },
+
+            {
+                path: 'goods/post',
+                component: () => import('@/views/user/goods/post')
+            },
+            {
+                path: 'goods/detail',
+                component: () => import('@/views/user/goods/detail')
+            },
+            {
+                path: 'goods/manager',
+                component: () => import('@/views/user/goods/manager')
+            },
+
+            
         ]
     },
     {
