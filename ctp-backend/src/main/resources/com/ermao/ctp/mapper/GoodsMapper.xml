@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ermao.ctp.mapper.GoodsMapper">
+
+    <select id="getGoodsDetail" resultType="com.ermao.ctp.pojo.DTO.GoodsDetailDTO">
+        select
+        g.id as id, name, photo, buy_price, sell_price,
+        g.create_time, trans_place, content,
+        u.id as userID, school, academy, grade,
+        nickname, phone, qq
+        from goods g join user u on g.user_id = u.id
+        where g.id = #{id}
+    </select>
+</mapper>
