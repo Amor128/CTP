@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<el-carousel>
+	<div id="user_home">
+		<el-carousel type="card">
 			<el-carousel-item
 				class="banner_item"
 				v-for="item in items"
@@ -87,6 +87,11 @@
 </script>
 
 <style scoped>
+
+	#user_home {
+		width: 100%;
+		margin: 0 auto;
+	}
 
 
 	.bottom {

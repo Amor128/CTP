@@ -9,27 +9,18 @@
             mode="horizontal"
             @select="handleSelect"
           >
-            <el-menu-item index="1">处理中心</el-menu-item>
+            <el-menu-item index="1">首页</el-menu-item>
             <el-submenu index="2">
-              <template slot="title">我的工作台</template>
-              <el-menu-item index="2-1">选项1</el-menu-item>
-              <el-menu-item index="2-2">选项2</el-menu-item>
-              <el-menu-item index="2-3">选项3</el-menu-item>
-              <el-submenu index="2-4">
-                <template slot="title">选项4</template>
-                <el-menu-item index="2-4-1">选项1</el-menu-item>
-                <el-menu-item index="2-4-2">选项2</el-menu-item>
-                <el-menu-item index="2-4-3">选项3</el-menu-item>
-              </el-submenu>
+              <template slot="title">商品</template>
+              <el-menu-item index="2-1">分类浏览</el-menu-item>
+              <el-menu-item index="2-2">发布商品</el-menu-item>
+              <el-menu-item index="2-3">管理商品</el-menu-item>
             </el-submenu>
-            <el-menu-item
-              index="3"
-              disabled
-            >消息中心</el-menu-item>
-            <el-menu-item index="4"><a
-                href="https://www.ele.me"
-                target="_blank"
-              >订单管理</a></el-menu-item>
+            <el-submenu index="3">
+              <template slot="title">想要</template>
+              <el-menu-item index="3-1">求助广场</el-menu-item>
+              <el-menu-item index="3-2">发布求助</el-menu-item>
+            </el-submenu>
           </el-menu>
         </el-col>
         <el-col :span="1">
@@ -59,17 +50,35 @@
 export default {
   data() {
     return {
-      activeIndex: "0",
+      activeIndex: "1",
       circleUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
     };
   },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+    handleSelect(key) {
+      switch(key) {
+        case "1":
+          this.routeTo("userHome")
+          break
+        case "2-2":
+          this.routeTo("userPostGoods")
+          break;
+        case "2-3":
+          this.routeTo("userGoodsManager")
+          break;
+        case "3-1":
+          this.routeTo("userWantHome")
+          break;
+        case "3-2":
+          this.routeTo("userWantPost")
+          break;
+        default:
+      }
     },
 
-    handleClick() {this.$router.push('/user/info')}
+    handleClick() {this.$router.push('/user/info')},
+    routeTo(name) {this.$router.push({name})}
   },
 };
 </script>

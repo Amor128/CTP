@@ -7,10 +7,12 @@ Vue.use(Router)
 export const constantRoutes = [
     {
         path: '/login',
+        name: 'userLogin',
         component: () => import('@/views/user/login')
     },
     {
         path: '/register',
+        name: 'userRegister',
         component: () => import('@/views/user/register')
     },
     
@@ -20,43 +22,59 @@ export const constantRoutes = [
         children: [
             {
                 path:'',
+                name: 'userHome',
                 component: () => import('@/views/user/home')
             },
             {
                 path: 'info',
+                name: 'userInfo',
                 component: () => import('@/views/user/userInfo')
             },
 
             {
                 path: 'goods/post',
+                name: 'userPostGoods',
                 component: () => import('@/views/user/goods/post')
             },
             {
                 path: 'goods/detail',
+                name: 'userGoodsDetail',
                 component: () => import('@/views/user/goods/detail')
             },
             {
                 path: 'goods/manager',
+                name: 'userGoodsManager',
                 component: () => import('@/views/user/goods/manager')
             },
-
-            
+            {
+                path: 'goods/want/home',
+                name: 'userWantHome',
+                component: () => import('@/views/user/goods/want')
+            },
+            {
+                path: 'goods/want/post',
+                name: 'userWantPost',
+                component: () => import('@/views/user/goods/want/post')
+            },
+            {
+                path: 'news',
+                name: 'newsHome',
+                component: () => import('@/views/user/news')
+            }
         ]
     },
     {
         path: '/admin/login',
         component: () => import('@/views/admin/login/index'),
-        hidden: true
     },
 
     {
         path: '/404',
         component: () => import('@/views/404'),
-        hidden: true
     },
 
     // 404 page must be placed at the end !!!
-    { path: '*', redirect: '/404', hidden: true }
+    { path: '*', redirect: '/404'}
 ]
 
 const createRouter = () => new Router({
