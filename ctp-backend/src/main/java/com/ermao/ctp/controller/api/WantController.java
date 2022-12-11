@@ -28,8 +28,17 @@ public class WantController {
     }
 
     @PutMapping("/id")
-    public Response postWant(@PathVariable Long id, @RequestBody WantPostDTO wantPostDTO) {
-        Integer res = wantService.insertWant(wantPostDTO);
+    public Response putWant(@PathVariable Long id, @RequestBody WantPostDTO wantPostDTO) {
+        Integer res = wantService.updateWant(id, wantPostDTO);
         return res > 0 ? Response.ok() : Response.fail();
+    }
+
+    @GetMapping
+    public Response getWantPage(@RequestParam("page") Integer page,
+                                @RequestParam("per_page") Integer perPage) {
+        if ((page == null || page < 1) || (perPage == null || perPage < 0)) {
+            return Response.fail();
+        }
+        return null;
     }
 }

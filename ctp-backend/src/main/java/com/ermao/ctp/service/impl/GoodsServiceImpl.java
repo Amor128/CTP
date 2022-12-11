@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Ermao
@@ -53,8 +52,10 @@ public class GoodsServiceImpl implements GoodsService {
     public List<GoodsHomeDTO> listHomeGoods() {
         List<GoodsHomeDTO> res = new ArrayList<>(9);
         QueryWrapper<GoodsDO> wrapper = new QueryWrapper<>();
-        wrapper.orderBy(true, false, "create_time");
+        wrapper.orderBy(true, false,"create_time")
+                .eq("recommend", 1).last("limit 4");
         List<GoodsDO> goodsList = goodsMapper.selectList(wrapper);
+
         goodsList.forEach(goodsDO -> {
             GoodsHomeDTO goodsHomeDTO = new GoodsHomeDTO();
             BeanUtils.copyProperties(goodsDO, goodsHomeDTO);

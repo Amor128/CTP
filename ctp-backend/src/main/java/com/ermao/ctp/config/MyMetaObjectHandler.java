@@ -19,6 +19,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         log.info("start insert fill ....");
         this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐使用)
         this.strictInsertFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐使用)
+        this.strictInsertFill(metaObject, "viewNumber", Integer.class, 0); // 起始版本 3.3.0(推荐使用)
+        this.strictInsertFill(metaObject, "status", Integer.class, 0); // 起始版本 3.3.0(推荐使用)
         // 或者
     }
 

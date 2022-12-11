@@ -11,13 +11,13 @@
         <el-input v-model="form.sellPrice"></el-input>
       </el-form-item>
       <el-form-item label="交易地点">
-        <el-input v-model="form.sellPrice"></el-input>
+        <el-input v-model="form.transPlace"></el-input>
       </el-form-item>
       <el-form-item label="商品类型">
         <el-cascader
           v-model="form.goodsCategoryID"
           :options="categories"
-          :props="{ expandTrigger: 'hover' }"
+          :props="{ expandTrigger: 'hover',label: 'name', value: 'id' }"
           @change="handleChange"></el-cascader>
       </el-form-item>
       <el-form-item label="商品描述">
@@ -45,6 +45,10 @@
 </template>
 
 <script>
+import { insertGoods } from "@/api/goods"
+import { listCategories } from "@/api/category"
+import { deleteEmptyArray, convertStringToNumber } from '@/utils'
+
 export default {
   name: "PostGoodsView",
 
@@ -55,61 +59,35 @@ export default {
         buyPrice: '',
         sellPrice: '',
         goodsCategoryID: '',
-        photo: ''
+        photo: '',
+        content: '',
+        transPlace: ''
       },
       photoUrl: '',
-      categories: [
-        {
-          value: 'zhinan',
-          label: '指南',
-          children: [
-            {
-              value: 'shejiyuanze',
-              label: '设计原则',
-              children: [
-                {
-                value: 'yizhi',
-                label: '一致'
-                },
-                {
-                  value: 'fankui',
-                  label: '反馈'
-                }
-              ]
-            }
-          ]
-        },
-        {
-          value: 'zhinan',
-          label: '指南',
-          children: [
-            {
-              value: 'shejiyuanze',
-              label: '设计原则',
-              children: [
-                {
-                value: 'yizhi',
-                label: '一致'
-                },
-                {
-                  value: 'fankui',
-                  label: '反馈'
-                }
-              ]
-            }
-          ]
-        }
-      ],
+      categories: [],
 
-      imgUrl: '',
       // 防止重复提交
-      loading: false
     }
+  },
+
+  computed: {
+    userID() {return this.$store.getters.userID}
   },
 
   methods: {
     onSubmit() {
-      console.log('submit!');
+      let data = {}
+      Object.assign(data, this.form)
+      data.sellPrice = Number(data.sellPrice)
+      data.buyPrice = Number(data.buyPrice)
+      data.userID = this.userID
+      data.goodsCategoryID = data.goodsCategoryID[1]
+      convertStringToNumber(data)
+      console.log(data)
+      insertGoods(data).then(res => {
+        console.log(res)
+        // TODO 发布成功，notify，跳转到管理商品页面
+      }).catch(err => console.log(err))
     },
 
     handleChange(value) {
@@ -121,9 +99,20 @@ export default {
       this.form.photo = res.data.url
       this.photoUrl = "http://localhost:8080" + res.data.url
     },
+
+    fechCategories() {
+      console.log("fech")
+      listCategories().then(res => {
+        for (let i = 0; i < res.data.length; i++)
+          deleteEmptyArray(res.data[i])
+        console.log(res)
+        this.categories = res.data
+      }).catch()
+    }
+  },
+  created() {
+    this.fechCategories()
   }
-
-
 }
 </script>
 

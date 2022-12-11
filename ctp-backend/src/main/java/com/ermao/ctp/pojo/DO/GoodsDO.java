@@ -30,6 +30,7 @@ public class GoodsDO {
 
     private Integer sellPrice;
 
+    @TableField(fill = FieldFill.INSERT)
     private Integer status;
 
     @TableField("goods_category_id")
@@ -38,6 +39,7 @@ public class GoodsDO {
     @TableField("user_id")
     private Long userID;
 
+    @TableField(fill = FieldFill.INSERT)
     private Integer viewNumber;
 
     private String transPlace;

@@ -18,18 +18,19 @@
 				:key="product.id"
 			>
 				<el-card class="my_el_card">
-						<el-image
-							class="goods_img"
-							fit="cover"
-							:src=product.src
-						></el-image>
+					<el-image
+						class="goods_img"
+						fit="cover"
+						:src=product.photo
+					></el-image>
 					<div class="goods_desc_container">
-						<div class="goods_name">商品名称</div>
+						<div class="goods_name">{{product.name}}</div>
 						<div class="bottom clearfix">
-							<time class="time">商品上架时间</time>
+							<time class="time">{{product.createTime}}</time>
 							<el-button
 								type="text"
 								class="button"
+								@click="handleGoodsDetail(product.id)"
 							>查看详情</el-button>
 						</div>
 					</div>
@@ -41,6 +42,9 @@
 </template>
 
 <script>
+	import { listHomeGoods } from "@/api/goods";
+	import { photo2Url } from "@/utils"
+
 	export default {
 		name: "HomeVIew",
 		data() {
@@ -59,46 +63,45 @@
 						src: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
 					},
 				],
-				products: [
-					{
-						id: 1,
-						src: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-						name: "Product 1",
-					},
-					{
-						id: 2,
-						src: "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
-						name: "Product 2",
-					},
-					{
-						id: 3,
-						src: "http://via.placeholder.com/150x150",
-						name: "Product 3",
-					},
-					{
-						id: 4,
-						src: "http://via.placeholder.com/150x150",
-						name: "Product 4",
-					}
-				],
+				products: [],
 			};
+		},
+
+		methods: {
+			freshRecommendGoodsList() {
+				listHomeGoods()
+					.then((res) => {
+						console.log(res);
+						for (let i = 0; i < res.data.length; i++) {
+							res.data[i].photo = photo2Url(res.data[i].photo)
+						}
+						this.products = res.data;
+					})
+					.catch();
+			},
+
+			handleGoodsDetail(goodsID) {
+				console.log(goodsID)
+				this.$router.push({name: "userGoodsDetail", params: { goodsID }})
+			}
+		},
+
+		created() {
+			this.freshRecommendGoodsList();
 		},
 	};
 </script>
 
 <style scoped>
-
 	#user_home {
 		width: 100%;
 		margin: 0 auto;
 	}
 
-
 	.bottom {
 		margin-top: 10px;
 		line-height: 12px;
 	}
-
 
 	.clearfix:before,
 	.clearfix:after {
@@ -141,7 +144,7 @@
 		color: #999;
 		float: left;
 	}
-	
+
 	.button {
 		padding: 0;
 		float: right;

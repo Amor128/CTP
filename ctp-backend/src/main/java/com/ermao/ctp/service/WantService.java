@@ -10,4 +10,6 @@ public interface WantService {
     Integer insertWant(WantPostDTO wantPostDTO);
 
     Integer updateWant(Long id, WantPostDTO wantPostDTO);
+
+
 }

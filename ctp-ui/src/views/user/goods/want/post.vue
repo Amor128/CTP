@@ -12,7 +12,7 @@
                 <el-input v-model="form.sellPrice"></el-input>
                 </el-form-item>
                 <el-form-item label="期望交易地点">
-                <el-input v-model="form.sellPrice"></el-input>
+                <el-input v-model="form.transPlace"></el-input>
                 </el-form-item>
 
                 <el-form-item>
@@ -28,19 +28,33 @@
 </template>
 
 <script>
+import { insertWant } from '@/api/want'
+import { convertStringToNumber } from '@/utils'
+
 export default {
     name: "GoodsWantPostView",
     data() {
         return {
             form: {
                 name: '',
+                content: '',
                 sellPrice: '',
+                transPlace: ''
             },
         }
     },
+    computed: {
+        userID() {return this.$store.getters.userID}
+    },
     methods: {
         onSubmit() {
-            console.log('submit!');
+            this.form.userID = this.userID
+            let data = {}
+            Object.assign(data, this.form)
+            convertStringToNumber(data)
+            insertWant(data).then(res => {
+                console.log(res)
+            }).catch(err => console.log(err))
         },
     }
 

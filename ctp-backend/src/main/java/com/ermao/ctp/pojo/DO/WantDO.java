@@ -1,9 +1,9 @@
 package com.ermao.ctp.pojo.DO;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 /**
  * @author Ermao
@@ -24,7 +24,15 @@ public class WantDO {
 
     private String transPlace;
 
-    private String viewNumber;
+    @TableField(fill = FieldFill.INSERT)
+    private Integer viewNumber;
 
+    @TableField("user_id")
     private Long userID;
+
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
 }

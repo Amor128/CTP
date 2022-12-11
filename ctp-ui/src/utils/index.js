@@ -119,3 +119,31 @@ export function copySameAttribute(target, source) {
     // 使用白名单来给两个对象赋值
     Object.assign(target, ...whitelist.map(key => ({ [key]: source[key] })));
 }
+
+export function photo2Url(photo) {
+    // eslint-disable-next-line no-prototype-builtins
+    return "http://localhost:8080" + photo
+}
+
+export function deleteEmptyArray(obj) {
+    if (obj.children.length == 0) {
+        delete obj.children
+        return
+    }
+    for (let i = 0; i < obj.children.length; i++) {
+        deleteEmptyArray(obj.children[i])
+    }
+}
+
+export function convertStringToNumber(obj) {
+    for (const key in obj) {
+        if (typeof obj[key] === 'string' && !isNaN(obj[key])) {
+        // 将字符串转换为数字
+        obj[key] = Number(obj[key]);
+        } else if (typeof obj[key] === 'object') {
+        // 如果字段是对象，则递归调用函数
+        convertStringToNumber(obj[key]);
+        }
+    }
+}
+  
