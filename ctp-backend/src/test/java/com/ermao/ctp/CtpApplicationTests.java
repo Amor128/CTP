@@ -1,8 +1,11 @@
 package com.ermao.ctp;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ermao.ctp.mapper.GoodsMapper;
 import com.ermao.ctp.pojo.DTO.GoodsDetailDTO;
+import com.ermao.ctp.pojo.DTO.GoodsHomeDTO;
 import com.ermao.ctp.service.GoodsService;
+import com.ermao.ctp.utils.MyPage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,5 +31,9 @@ class CtpApplicationTests {
     @Test
     void insertGoods() {
         HashMap<String, Object> map = new HashMap<>();
+    }
+
+    @Test
+    void getGoodsPageByCategory() {
     }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ermao.ctp.mapper.WantMapper">
+    <select id="getWantPage" resultType="com.ermao.ctp.pojo.DTO.WantDetailDTO">
+        select
+        w.id as id, w.name as name, w.content as content,
+        w.sell_price as sellPrice, w.trans_place as transPlace,
+        w.create_time as createTime, w.user_id as userID,
+        u.nickname as nickname, u.head_pic as headPic,
+        u.qq as qq, u.phone as phone
+        from want w join user u on w.user_id = u.id
+        order by createTime desc
+    </select>
+</mapper>

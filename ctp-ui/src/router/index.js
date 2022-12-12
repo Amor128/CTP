@@ -60,6 +60,11 @@ export const constantRoutes = [
                 path: 'news',
                 name: 'newsHome',
                 component: () => import('@/views/user/news')
+            },
+            {
+                path: 'explore',
+                name: 'GoodsExplore',
+                component: () => import('@/views/user/goods/search')
             }
         ]
     },

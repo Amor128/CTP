@@ -1,0 +1,16 @@
+package com.ermao.ctp.service;
+
+import com.ermao.ctp.pojo.DTO.CommentDTO;
+import com.ermao.ctp.pojo.DTO.CommentPostDTO;
+
+import java.util.List;
+
+/**
+ * @author Ermao
+ * Date: 2022/12/12 22:01
+ */
+public interface CommentService {
+    List<CommentDTO> listComments(Long id);
+
+    Integer insertComment(CommentPostDTO commentPostDTO);
+}

@@ -13,4 +13,16 @@
         from goods g join user u on g.user_id = u.id
         where g.id = #{id}
     </select>
+
+    <select id="getGoodsPageByCategory" resultType="com.ermao.ctp.pojo.DTO.GoodsHomeDTO">
+        select *
+        from goods
+        where goods_category_id = #{category}
+    </select>
+
+    <select id="getGoodsPageByName" parameterType="java.lang.String" resultType="com.ermao.ctp.pojo.DTO.GoodsHomeDTO">
+        select *
+        from goods
+        where name LIKE concat('%',#{name},'%')
+    </select>
 </mapper>

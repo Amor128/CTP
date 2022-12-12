@@ -1,34 +1,30 @@
 package com.ermao.ctp.pojo.DTO;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 /**
  * @author Ermao
- * Date: 2022/12/11 23:47
+ * Date: 2022/12/12 21:58
  */
 @Data
-public class WantDetailDTO {
+public class CommentDTO {
     private Long id;
-
-    private String name;
 
     private String content;
 
-    private Integer sellPrice;
+    private String replyTo;
 
-    private String transPlace;
-
-    private LocalDateTime createTime;
+    private Long goodsID;
 
     private Long userID;
 
     private String nickname;
 
-    private String phone;
-
     private String headPic;
 
-    private String qq;
+    private LocalDateTime createTime;
 }

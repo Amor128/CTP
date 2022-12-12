@@ -7,3 +7,11 @@ export function insertWant(data) {
     data
   })
 }
+
+export function getWantPage(params) {
+  return request({
+    url: '/wants',
+    method: 'get',
+    params
+  })
+}

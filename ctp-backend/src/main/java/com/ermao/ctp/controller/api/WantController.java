@@ -2,6 +2,7 @@ package com.ermao.ctp.controller.api;
 
 import com.ermao.ctp.pojo.DTO.WantPostDTO;
 import com.ermao.ctp.service.WantService;
+import com.ermao.ctp.utils.MyPage;
 import com.ermao.ctp.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,11 +35,12 @@ public class WantController {
     }
 
     @GetMapping
-    public Response getWantPage(@RequestParam("page") Integer page,
-                                @RequestParam("per_page") Integer perPage) {
+    public Response getWantPage(@RequestParam("page") Long page,
+                                @RequestParam("perPage") Long perPage) {
         if ((page == null || page < 1) || (perPage == null || perPage < 0)) {
             return Response.fail();
         }
-        return null;
+        MyPage res = wantService.getWantPage(page, perPage);
+        return Response.ok(res);
     }
 }

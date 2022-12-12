@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ermao.ctp.mapper.CommentMapper">
+    <select id="listComments" resultType="com.ermao.ctp.pojo.DTO.CommentDTO">
+        select
+        c.id as id, c.content as content, c.reply_to as replyTo,
+        c.goods_id as goodsID, c.user_id as userID, c.create_time as createTime,
+        u.nickname as nickname, u.head_pic as headPic
+        from comment c join user u on c.user_id = u.id
+        where c.goods_id = #{id}
+    </select>
+
+</mapper>

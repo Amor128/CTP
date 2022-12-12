@@ -7,6 +7,14 @@ export function listHomeGoods() {
   })
 }
 
+export function getGoodsPage(params) {
+  return request({
+    url: '/goods',
+    method: 'get',
+    params
+  })
+}
+
 export function getGoodsDetail(id) {
   return request({
     url: '/goods/' + id,
