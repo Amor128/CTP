@@ -1,11 +1,14 @@
 package com.ermao.ctp.controller.api;
 
+import com.ermao.ctp.pojo.DO.WantDO;
 import com.ermao.ctp.pojo.DTO.WantPostDTO;
 import com.ermao.ctp.service.WantService;
 import com.ermao.ctp.utils.MyPage;
 import com.ermao.ctp.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author Ermao
@@ -42,5 +45,19 @@ public class WantController {
         }
         MyPage res = wantService.getWantPage(page, perPage);
         return Response.ok(res);
+    }
+
+    @GetMapping("/filter")
+    public Response getWantPage(@RequestParam("userID") Long userID) {
+        List<WantDO> list = wantService.listMyWant(userID);
+        if (list != null) {
+            return Response.ok(list);
+        }
+        return Response.fail();
+    }
+
+    @DeleteMapping("/{wantID}")
+    public Response removeWant(@PathVariable("wantID") Long wantID) {
+        return wantService.removeWant(wantID) > 0 ? Response.ok() : Response.fail();
     }
 }

@@ -1,9 +1,7 @@
 package com.ermao.ctp.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.ermao.ctp.pojo.DTO.GoodsDetailDTO;
-import com.ermao.ctp.pojo.DTO.GoodsHomeDTO;
-import com.ermao.ctp.pojo.DTO.GoodsPostDTO;
+import com.ermao.ctp.pojo.DTO.*;
 import com.ermao.ctp.utils.MyPage;
 
 import java.util.List;
@@ -19,9 +17,11 @@ public interface GoodsService {
 
     Integer insertGoods(GoodsPostDTO goodsPostDTO);
 
-    Integer updateGoods(Long id, GoodsPostDTO goodsPostDTO);
+    Integer updateGoods(Long id, GoodsUpdateDTO goodsUpdateDTO);
 
     MyPage getGoodsPageByCategory(Long page, Long perPage, Long category);
 
     MyPage getGoodsPageByName(Long page, Long perPage, String name);
+
+    List<GoodsManagerDTO> listGoods(Long userID);
 }

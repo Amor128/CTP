@@ -1,16 +1,17 @@
 package com.ermao.ctp.controller.api;
 
-import com.ermao.ctp.pojo.DTO.GoodsDetailDTO;
-import com.ermao.ctp.pojo.DTO.GoodsHomeDTO;
-import com.ermao.ctp.pojo.DTO.GoodsPostDTO;
+import com.ermao.ctp.pojo.DO.GoodsDO;
+import com.ermao.ctp.pojo.DTO.*;
 import com.ermao.ctp.service.GoodsService;
 import com.ermao.ctp.utils.MyPage;
 import com.ermao.ctp.utils.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ermao
@@ -57,7 +58,6 @@ public class GoodsController {
                               @RequestParam("perPage") Long perPage,
                               @RequestParam(name = "category", required = false) Long category,
                               @RequestParam(name = "name", required = false) String name) {
-        System.out.println(page + " " + perPage + " " + category + " " + name);
         MyPage res = null;
         if (category != null) {
             res = goodsService.getGoodsPageByCategory(page, perPage, category);
@@ -69,5 +69,22 @@ public class GoodsController {
             return Response.fail();
         }
         return Response.ok(res);
+    }
+
+    @GetMapping("/filter")
+    public Response listGoodsManager(@RequestParam(name = "userID") Long userID) {
+
+        List<GoodsManagerDTO> list = goodsService.listGoods(userID);
+        if (list != null) {
+            return Response.ok(list);
+        }
+        return Response.fail();
+    }
+
+    @PutMapping("/{goodsID}")
+    public Response updateGoods(@PathVariable("goodsID") Long goodsID, @RequestBody GoodsUpdateDTO goodsUpdateDTO) {
+
+        Integer res = goodsService.updateGoods(goodsID, goodsUpdateDTO);
+        return res > 0 ? Response.ok() : Response.fail();
     }
 }

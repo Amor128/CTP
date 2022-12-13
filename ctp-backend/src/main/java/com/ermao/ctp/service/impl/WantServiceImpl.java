@@ -50,4 +50,14 @@ public class WantServiceImpl implements WantService {
         List<WantDetailDTO> list = wantMapper.getWantPage(myPage);
         return new MyPage(myPage.getCurrent(), myPage.getSize(), myPage.getTotal(), list);
     }
+
+    @Override
+    public Integer removeWant(Long wantID) {
+        return wantMapper.deleteById(wantID);
+    }
+
+    @Override
+    public List<WantDO> listMyWant(Long userID) {
+        return wantMapper.selectList(new QueryWrapper<WantDO>().eq("user_id", userID));
+    }
 }

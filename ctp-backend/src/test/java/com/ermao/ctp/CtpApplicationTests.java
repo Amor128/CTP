@@ -2,6 +2,7 @@ package com.ermao.ctp;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ermao.ctp.mapper.GoodsMapper;
+import com.ermao.ctp.pojo.DO.GoodsDO;
 import com.ermao.ctp.pojo.DTO.GoodsDetailDTO;
 import com.ermao.ctp.pojo.DTO.GoodsHomeDTO;
 import com.ermao.ctp.service.GoodsService;
@@ -35,5 +36,9 @@ class CtpApplicationTests {
 
     @Test
     void getGoodsPageByCategory() {
+        GoodsDO goodsDO = new GoodsDO();
+        goodsDO.setId(5L);
+        goodsDO.setGoodsCategoryID(1L);
+        goodsMapper.updateById(goodsDO);
     }
 }

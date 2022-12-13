@@ -25,4 +25,11 @@
         from goods
         where name LIKE concat('%',#{name},'%')
     </select>
+
+    <select id="listGoods" parameterType="java.lang.Long" resultType="com.ermao.ctp.pojo.DTO.GoodsManagerDTO">
+        select
+        id, name, photo, content, status, create_time as createTime
+        from goods
+        where user_id = #{userID}
+    </select>
 </mapper>

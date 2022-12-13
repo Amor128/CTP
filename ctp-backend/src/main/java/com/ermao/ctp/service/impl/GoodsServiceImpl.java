@@ -5,9 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ermao.ctp.mapper.GoodsMapper;
 import com.ermao.ctp.pojo.DO.GoodsDO;
-import com.ermao.ctp.pojo.DTO.GoodsDetailDTO;
-import com.ermao.ctp.pojo.DTO.GoodsHomeDTO;
-import com.ermao.ctp.pojo.DTO.GoodsPostDTO;
+import com.ermao.ctp.pojo.DTO.*;
 import com.ermao.ctp.service.GoodsService;
 import com.ermao.ctp.utils.MyPage;
 import org.springframework.beans.BeanUtils;
@@ -44,12 +42,19 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public Integer updateGoods(Long id, GoodsPostDTO goodsPostDTO) {
+    public Integer updateGoods(Long goodsID, GoodsUpdateDTO goodsUpdateDTO) {
         GoodsDO goodsDO = new GoodsDO();
-        BeanUtils.copyProperties(goodsPostDTO, goodsDO);
-        goodsDO.setId(id);
+        if (goodsUpdateDTO.getStatus() != null) {
+            // 修改状态
+            goodsDO.setStatus(goodsUpdateDTO.getStatus());
+        } else {
+            // 修改商品信息
+            BeanUtils.copyProperties(goodsUpdateDTO, goodsDO);
+        }
+        goodsDO.setId(goodsID);
         return goodsMapper.updateById(goodsDO);
     }
+
 
     @Override
     public List<GoodsHomeDTO> listHomeGoods() {
@@ -81,5 +86,10 @@ public class GoodsServiceImpl implements GoodsService {
         goodsDOPage.setCurrent(page).setSize(perPage);
         List<GoodsHomeDTO> list = goodsMapper.getGoodsPageByName(goodsDOPage, name);
         return  new MyPage(page, perPage, goodsDOPage.getTotal(), list);
+    }
+
+    @Override
+    public List<GoodsManagerDTO> listGoods(Long userID) {
+        return goodsMapper.listGoods(userID);
     }
 }

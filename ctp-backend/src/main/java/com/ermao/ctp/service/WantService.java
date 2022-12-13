@@ -1,7 +1,10 @@
 package com.ermao.ctp.service;
 
+import com.ermao.ctp.pojo.DO.WantDO;
 import com.ermao.ctp.pojo.DTO.WantPostDTO;
 import com.ermao.ctp.utils.MyPage;
+
+import java.util.List;
 
 /**
  * @author Ermao
@@ -13,4 +16,8 @@ public interface WantService {
     Integer updateWant(Long id, WantPostDTO wantPostDTO);
 
     MyPage getWantPage(Long page, Long perPage);
+
+    Integer removeWant(Long wantID);
+
+    List<WantDO> listMyWant(Long userID);
 }
