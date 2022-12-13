@@ -32,7 +32,7 @@
             ></el-avatar>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item @click.native="handleClick">个人中心</el-dropdown-item>
-              <el-dropdown-item>退出登录</el-dropdown-item>
+              <el-dropdown-item @click.native="handleLogout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
 
@@ -61,6 +61,9 @@ export default {
         case "1":
           this.routeTo("userHome")
           break
+        case "2-1":
+          this.routeTo("GoodsExplore")
+          break;
         case "2-2":
           this.routeTo("userPostGoods")
           break;
@@ -75,6 +78,10 @@ export default {
           break;
         default:
       }
+    },
+    handleLogout() {
+      this.$store.dispatch("user/logout")
+      this.$router.push('/login')
     },
 
     handleClick() {this.$router.push('/user/info')},

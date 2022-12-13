@@ -15,3 +15,18 @@ export function getWantPage(params) {
     params
   })
 }
+
+export function getMyWantList(params) {
+  return request({
+    url: '/wants/filter',
+    method: 'get',
+    params
+  })
+}
+
+export function removeWant(wantID) {
+  return request({
+    url: '/wants/' + wantID,
+    method: 'delete',
+  })
+}

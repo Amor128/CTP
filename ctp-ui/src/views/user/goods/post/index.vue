@@ -36,8 +36,8 @@
       
       <el-form-item>
         <div class="post_button">
-          <el-button type="primary" @click="onSubmit">发布</el-button>
-          <el-button>清空</el-button>
+          <el-button v-if="this.$route.params.goods == null" type="primary" @click="onSubmit">发布</el-button>
+          <el-button v-if="this.$route.params.goods != null" type="primary" @click="onUpdate">修改</el-button>
         </div>
       </el-form-item>
     </el-form>
@@ -45,9 +45,9 @@
 </template>
 
 <script>
-import { insertGoods } from "@/api/goods"
+import { insertGoods, updateGoods } from "@/api/goods"
 import { listCategories } from "@/api/category"
-import { deleteEmptyArray, convertStringToNumber } from '@/utils'
+import { deleteEmptyArray, convertStringToNumber, copySameAttribute } from '@/utils'
 
 export default {
   name: "PostGoodsView",
@@ -90,6 +90,17 @@ export default {
       }).catch(err => console.log(err))
     },
 
+    onUpdate() {
+      this.form.goodsCategoryID = this.form.goodsCategoryID[1]
+      let data = {}
+      Object.assign(data, this.form)
+      data.id = 
+      updateGoods(this.$route.params.goods.id, this.form).then(res => {
+        console.log(res)
+        // TODO
+      }).catch()
+    },
+
     handleChange(value) {
       console.log(value);
     },
@@ -112,6 +123,11 @@ export default {
   },
   created() {
     this.fechCategories()
+    let alreadyGoods = this.$route.params.goods
+    if (alreadyGoods) {
+      copySameAttribute(this.form, alreadyGoods)
+      this.photoUrl = alreadyGoods.photoUrl
+    }
   }
 }
 </script>

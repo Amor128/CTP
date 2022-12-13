@@ -1,12 +1,10 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken, getUserID, setUserID, removeUserID } from '@/utils/auth'
-import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
     return {
         token: getToken(),
         userID: getUserID(),
-        name: '',
     }
 }
 const mutations = {
@@ -35,8 +33,7 @@ const actions = {
             login({ phone: phone.trim(), password: password }).then(response => {
                 const { data } = response
                 commit('SET_TOKEN', data.token)
-                console.log("commit login userID:", data.id)
-                commit('SET_USERID', data.id)
+                commit('SET_USERID', Number(data.id))
                 setToken(data.token)
                 setUserID(data.id)
                 resolve()
@@ -68,18 +65,11 @@ const actions = {
     },
 
     // user logout
-    logout({ commit, state }) {
-        return new Promise((resolve, reject) => {
-            logout(state.token).then(() => {
-                removeToken() // must remove  token  first
-                removeUserID()
-                resetRouter()
-                commit('RESET_STATE')
-                resolve()
-            }).catch(error => {
-                reject(error)
-            })
-        })
+    logout({ commit }) {
+        removeToken() // must remove  token  first
+        removeUserID()
+        commit('RESET_STATE')
+
     },
 
     // remove token

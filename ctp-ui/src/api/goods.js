@@ -29,3 +29,19 @@ export function insertGoods(data) {
     data
   })
 }
+
+export function lsitMyGoods(params) {
+  return request({
+    url: '/goods/filter',
+    method: 'get',
+    params
+  })
+}
+
+export function updateGoods(goodsID, data) {
+  return request({
+    url: '/goods/' + goodsID,
+    method: 'put',
+    data
+  })
+}
