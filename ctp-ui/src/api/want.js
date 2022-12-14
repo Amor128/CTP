@@ -16,6 +16,14 @@ export function getWantPage(params) {
   })
 }
 
+export function lsitWant(params) {
+  return request({
+    url: '/wants/admin',
+    method: 'get',
+    params
+  })
+}
+
 export function getMyWantList(params) {
   return request({
     url: '/wants/filter',

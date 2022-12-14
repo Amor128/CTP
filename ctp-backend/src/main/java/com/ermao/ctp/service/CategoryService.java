@@ -1,6 +1,7 @@
 package com.ermao.ctp.service;
 
 import com.ermao.ctp.pojo.DTO.CategoryDTO;
+import com.ermao.ctp.pojo.vo.CategoryVO;
 
 import java.util.List;
 
@@ -10,4 +11,12 @@ import java.util.List;
  */
 public interface CategoryService {
     List<CategoryDTO> listCategories();
+
+    List<CategoryVO> adminListCategories();
+
+    Integer updateCategory(CategoryVO categoryVO);
+
+    Integer insertCategory(CategoryVO categoryVO);
+
+    List<CategoryVO> listParentCategories();
 }

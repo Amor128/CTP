@@ -68,10 +68,86 @@ export const constantRoutes = [
             }
         ]
     },
+
     {
-        path: '/admin/login',
-        component: () => import('@/views/admin/login/index'),
+        path: '/admin',
+        component: () => import('@/views/admin/adminLayout'),
+        meta:{
+            title:"首页",
+            showInbreadcrumb:true
+        },
+        children: [
+            {
+                path: 'login',
+                name: 'adminLogin',
+                component: () => import('@/views/admin/login/index'),
+            },
+            {
+                path: 'user',
+                name: 'adminUser',
+                component: () => import('@/views/admin/user/user'),
+                meta:{
+                    title:"修改密码",
+                    showInbreadcrumb:true
+                },
+            },
+            {
+                path: 'administor',
+                name: 'adminAdministor',
+                component: () => import('@/views/admin/user/administor'),
+                meta:{
+                    title:"管理员帐号管理",
+                    showInbreadcrumb:true
+                },
+            },
+            {
+                path: 'goods',
+                name: 'adminGoods',
+                component: () => import('@/views/admin/goods'),
+                meta:{
+                    title:"商品管理",
+                    showInbreadcrumb:true
+                },
+            },
+            {
+                path: 'comment',
+                name: 'adminComment',
+                component: () => import('@/views/admin/comment'),
+                meta:{
+                    title:"评论管理",
+                    showInbreadcrumb:true
+                },
+            },
+            {
+                path: 'want',
+                name: 'adminWant',
+                component: () => import('@/views/admin/want'),
+                meta:{
+                    title:"求购管理",
+                    showInbreadcrumb:true
+                },
+            },
+            {
+                path: 'news',
+                name: 'adminNews',
+                component: () => import('@/views/admin/news'),
+                meta:{
+                    title:"新闻管理",
+                    showInbreadcrumb:true
+                },
+            },
+            {
+                path: 'category',
+                name: 'adminCategory',
+                component: () => import('@/views/admin/category'),
+                meta:{
+                    title:"分类管理",
+                    showInbreadcrumb:true
+                },
+            },
+        ]
     },
+
 
     {
         path: '/404',

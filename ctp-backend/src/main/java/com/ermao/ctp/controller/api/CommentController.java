@@ -33,6 +33,20 @@ public class CommentController {
         return Response.fail();
     }
 
+    @DeleteMapping("/{id}")
+    public Response removeComment(@PathVariable("id") Long id) {
+        return commentService.removeComment(id) > 0 ? Response.ok() : Response.fail();
+    }
+
+    @GetMapping("/admin")
+    public Response listComment() {
+        List<CommentDTO> list = commentService.listComments();
+        if (list != null) {
+            return Response.ok(list);
+        }
+        return Response.fail();
+    }
+
     @PostMapping
     public Response postComment(@RequestBody CommentPostDTO commentPostDTO) {
         Integer res = commentService.insertComment(commentPostDTO);

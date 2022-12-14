@@ -12,5 +12,9 @@ import java.util.List;
 public interface CommentService {
     List<CommentDTO> listComments(Long id);
 
+    List<CommentDTO> listComments();
+
     Integer insertComment(CommentPostDTO commentPostDTO);
+
+    Integer removeComment(Long id);
 }

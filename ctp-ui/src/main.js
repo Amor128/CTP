@@ -9,7 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import store from '@/store'
 import router from '@/router'
 
-import '@/permission' // permission control
+// import '@/permission' // permission control
 
 
 Vue.config.productionTip = false

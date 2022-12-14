@@ -20,4 +20,6 @@ public interface WantService {
     Integer removeWant(Long wantID);
 
     List<WantDO> listMyWant(Long userID);
+
+    List<WantDO> listWant();
 }

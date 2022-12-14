@@ -1,7 +1,6 @@
 package com.ermao.ctp.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ermao.ctp.mapper.GoodsMapper;
 import com.ermao.ctp.pojo.DO.GoodsDO;

@@ -12,4 +12,12 @@
         where c.goods_id = #{id}
     </select>
 
+    <select id="adminListComments" resultType="com.ermao.ctp.pojo.DTO.CommentDTO">
+        select
+        c.id as id, c.content as content, c.reply_to as replyTo,
+        c.goods_id as goodsID, c.user_id as userID, c.create_time as createTime,
+        u.nickname as nickname, u.head_pic as headPic
+        from comment c join user u on c.user_id = u.id
+    </select>
+
 </mapper>

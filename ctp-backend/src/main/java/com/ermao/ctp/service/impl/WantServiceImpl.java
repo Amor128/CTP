@@ -60,4 +60,11 @@ public class WantServiceImpl implements WantService {
     public List<WantDO> listMyWant(Long userID) {
         return wantMapper.selectList(new QueryWrapper<WantDO>().eq("user_id", userID));
     }
+
+    @Override
+    public List<WantDO> listWant() {
+        QueryWrapper<WantDO> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("create_time");
+        return wantMapper.selectList(wrapper);
+    }
 }

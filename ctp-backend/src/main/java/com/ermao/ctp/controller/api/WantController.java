@@ -47,6 +47,11 @@ public class WantController {
         return Response.ok(res);
     }
 
+    @GetMapping("/admin")
+    public Response listWants() {
+        return Response.ok(wantService.listWant());
+    }
+
     @GetMapping("/filter")
     public Response getWantPage(@RequestParam("userID") Long userID) {
         List<WantDO> list = wantService.listMyWant(userID);

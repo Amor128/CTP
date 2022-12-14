@@ -31,9 +31,19 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public List<CommentDTO> listComments() {
+        return commentMapper.adminListComments();
+    }
+
+    @Override
     public Integer insertComment(CommentPostDTO commentPostDTO) {
         CommentDO commentDO = new CommentDO();
         BeanUtils.copyProperties(commentPostDTO, commentDO);
         return commentMapper.insert(commentDO);
+    }
+
+    @Override
+    public Integer removeComment(Long id) {
+        return commentMapper.deleteById(id);
     }
 }

@@ -15,4 +15,6 @@ import java.util.List;
 @Mapper
 public interface CommentMapper extends BaseMapper<CommentDO> {
     List<CommentDTO> listComments(@Param("id") Long goodsID);
+
+    List<CommentDTO> adminListComments();
 }
